@@ -8,6 +8,9 @@ type Repository[T any] interface {
 	FindAll() ([]T, error)
 	Update(entity *T) error
 	Delete(id uint) error
+	BeginTransaction() Repository[T]
+	Commit() error
+	Rollback()
 }
 
 type repository[T any] struct {
@@ -19,6 +22,9 @@ var (
 	UserRepo     UserRepository
 	CategoryRepo CategoryRepository
 	OrderRepo    OrderRepository
+	RoleRepo     RoleRepository
+	MediaRepo    MediaRepository
+	TagRepo      TagRepository
 )
 
 func InitRepositories(db *gorm.DB) {
@@ -26,10 +32,26 @@ func InitRepositories(db *gorm.DB) {
 	UserRepo = NewUserRepository(db)
 	CategoryRepo = NewCategoryRepository(db)
 	OrderRepo = NewOrderRepository(db)
+	RoleRepo = NewRoleRepository(db)
+	MediaRepo = NewMediaRepository(db)
+	TagRepo = NewTagRepository(db)
 }
 
 func NewRepository[T any](db *gorm.DB) Repository[T] {
 	return &repository[T]{db}
+}
+
+func (r *repository[T]) BeginTransaction() Repository[T] {
+	tx := r.db.Begin()
+	return &repository[T]{db: tx}
+}
+
+func (r *repository[T]) Commit() error {
+	return r.db.Commit().Error
+}
+
+func (r *repository[T]) Rollback() {
+	r.db.Rollback()
 }
 
 func (r *repository[T]) Create(entity *T) error {

@@ -3,6 +3,11 @@ module github.com/sandeep-jaiswar/cms-backend
 go 1.23.2
 
 require (
+	github.com/google/uuid v1.6.0
+	github.com/hashicorp/go-uuid v1.0.3
+)
+
+require (
 	github.com/bytedance/sonic v1.12.3 // indirect
 	github.com/bytedance/sonic/loader v0.2.1 // indirect
 	github.com/cloudwego/base64x v0.1.4 // indirect
