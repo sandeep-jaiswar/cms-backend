@@ -6,17 +6,17 @@ import (
 )
 
 type ProductRepository interface {
-    Repository[models.Product]
+	Repository[models.Product]
 }
 
 type productRepository struct {
-    Repository[models.Product]
-    db *gorm.DB
+	Repository[models.Product]
+	db *gorm.DB
 }
 
 func NewProductRepository(db *gorm.DB) ProductRepository {
-    return &productRepository{
-        Repository: NewRepository[models.Product](db),
-        db: db,
-    }
+	return &productRepository{
+		Repository: NewRepository[models.Product](db),
+		db:         db,
+	}
 }

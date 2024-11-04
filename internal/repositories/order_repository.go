@@ -6,17 +6,17 @@ import (
 )
 
 type OrderRepository interface {
-    Repository[models.Order]
+	Repository[models.Order]
 }
 
 type orderRepository struct {
-    Repository[models.Order]
-    db *gorm.DB
+	Repository[models.Order]
+	db *gorm.DB
 }
 
 func NewOrderRepository(db *gorm.DB) OrderRepository {
-    return &orderRepository{
-        Repository: NewRepository[models.Order](db),
-        db: db,
-    }
+	return &orderRepository{
+		Repository: NewRepository[models.Order](db),
+		db:         db,
+	}
 }

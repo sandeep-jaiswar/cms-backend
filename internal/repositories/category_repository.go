@@ -6,15 +6,15 @@ import (
 )
 
 type CategoryRepository interface {
-    Repository[models.Category]
+	Repository[models.Category]
 }
 
 type categoryRepository struct {
-    Repository[models.Category]
+	Repository[models.Category]
 }
 
 func NewCategoryRepository(db *gorm.DB) CategoryRepository {
-    return &categoryRepository{
-        Repository: NewRepository[models.Category](db),
-    }
+	return &categoryRepository{
+		Repository: NewRepository[models.Category](db),
+	}
 }
